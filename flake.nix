@@ -59,6 +59,13 @@
               sccache
             ];
           };
+
+          js = mkShell pkgs {
+            packages = with pkgs; [
+              nodejs
+              corepack
+            ];
+          };
         }
       );
     };
