@@ -4,6 +4,7 @@
 	import { random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
+	const MAGNITUDE = 48;
 
 	let button: HTMLButtonElement;
 	let liked = $state(false);
@@ -20,9 +21,11 @@
 		range(5).forEach(() => {
 			const particle = document.createElement('span');
 
+			const x = random(-MAGNITUDE, MAGNITUDE) + 'px';
+			const y = random(-MAGNITUDE, MAGNITUDE) + 'px';
+
 			particle.classList.add('particle');
-			particle.style.top = random(0, 100) + '%';
-			particle.style.left = random(0, 100) + '%';
+			particle.style.transform = `translate(${x},${y})`;
 			particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
 
 			// eslint-disable-next-line svelte/no-dom-manipulating
@@ -78,17 +81,17 @@
 
 	@keyframes fromCenter {
 		from {
-			top: 50%;
-			left: 50%;
+			transform: translate(0px, 0px);
 		}
 	}
 
 	button :global(.particle) {
 		--size: calc(var(--spacing) * 3);
 		position: absolute;
+		inset: 0;
+		margin: auto;
 		height: var(--size);
 		width: var(--size);
-		transform: translate(-50%, -50%);
 		border-radius: 50%;
 		background: var(--color-red-200);
 		animation:
