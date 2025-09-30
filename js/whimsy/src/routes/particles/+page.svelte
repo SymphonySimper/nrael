@@ -1,11 +1,30 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import { random } from '$lib/utils';
 
+	const FADE_DURATION = 1000;
+
 	let liked = $state(false);
+	let show = $state(false);
+	let timeout: ReturnType<typeof setTimeout>;
 
 	function handleClick() {
 		liked = !liked;
+		if (!liked) return;
+
+		show = true;
+
+		timeout = setTimeout(() => {
+			show = false;
+		}, FADE_DURATION + 200);
 	}
+
+	onMount(() => {
+		return () => {
+			if (timeout) clearTimeout(timeout);
+		};
+	});
 </script>
 
 <button
@@ -29,14 +48,14 @@
 	</svg>
 	<span class="sr-only">Like this post</span>
 
-	{#if liked}
+	{#if show}
 		<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 		{#each { length: 5 } as _, index (index)}
 			{@const top = random(0, 100) + '%'}
 			{@const left = random(0, 100) + '%'}
 			<span
 				class="particle absolute size-3 rounded-full bg-red-200"
-				style={`top: ${top}; left: ${left};`}
+				style={`top: ${top}; left: ${left}; animation-duration: ${FADE_DURATION + 'ms'};`}
 			></span>
 		{/each}
 	{/if}
@@ -53,6 +72,6 @@
 	}
 
 	.particle {
-		animation: fadeOut 1000ms forwards;
+		animation: fadeOut forwards;
 	}
 </style>
