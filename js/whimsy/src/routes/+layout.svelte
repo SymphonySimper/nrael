@@ -9,6 +9,6 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<main class="grid h-svh w-svw place-content-center overflow-hidden bg-white text-black font-sans">
+<main class="grid h-svh w-svw place-content-center overflow-hidden bg-white font-sans text-black">
 	{@render children?.()}
 </main>
