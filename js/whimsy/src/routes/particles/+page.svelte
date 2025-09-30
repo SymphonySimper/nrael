@@ -23,7 +23,7 @@
 			particle.classList.add('particle');
 			particle.style.top = random(0, 100) + '%';
 			particle.style.left = random(0, 100) + '%';
-			particle.style.animationDuration = FADE_DURATION + 'ms';
+			particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
 
 			// eslint-disable-next-line svelte/no-dom-manipulating
 			button.appendChild(particle);
@@ -76,6 +76,13 @@
 		}
 	}
 
+	@keyframes fromCenter {
+		from {
+			top: 50%;
+			left: 50%;
+		}
+	}
+
 	button :global(.particle) {
 		--size: calc(var(--spacing) * 3);
 		position: absolute;
@@ -84,6 +91,8 @@
 		transform: translate(-50%, -50%);
 		border-radius: 50%;
 		background: var(--color-red-200);
-		animation: fadeToTransparent forwards;
+		animation:
+			fadeToTransparent var(--fade-duration) forwards,
+			fromCenter calc(var(--fade-duration) / 2);
 	}
 </style>
