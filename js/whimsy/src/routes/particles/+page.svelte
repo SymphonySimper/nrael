@@ -1,33 +1,53 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { random } from '$lib/utils';
+	import { random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
 
+	let button: HTMLButtonElement;
 	let liked = $state(false);
-	let show = $state(false);
-	let timeout: ReturnType<typeof setTimeout>;
+	let timeouts: ReturnType<typeof setTimeout>[] = [];
 
 	function handleClick() {
+		if (!button) return;
+
 		liked = !liked;
 		if (!liked) return;
 
-		show = true;
+		const particles: HTMLSpanElement[] = [];
 
-		timeout = setTimeout(() => {
-			show = false;
-		}, FADE_DURATION + 200);
+		range(5).forEach(() => {
+			const particle = document.createElement('span');
+
+			particle.classList.add('particle');
+			particle.style.top = random(0, 100) + '%';
+			particle.style.left = random(0, 100) + '%';
+			particle.style.animationDuration = FADE_DURATION + 'ms';
+
+			// eslint-disable-next-line svelte/no-dom-manipulating
+			button.appendChild(particle);
+			particles.push(particle);
+		});
+
+		timeouts.push(
+			setTimeout(() => {
+				particles.forEach((particle) => particle.remove());
+			}, FADE_DURATION + 200)
+		);
 	}
 
 	onMount(() => {
 		return () => {
-			if (timeout) clearTimeout(timeout);
+			timeouts.forEach((timeout) => {
+				clearInterval(timeout);
+			});
 		};
 	});
 </script>
 
 <button
+	bind:this={button}
 	class="group relative rounded-full bg-transparent p-4 hover:bg-gray-50"
 	onclick={handleClick}
 >
@@ -47,18 +67,6 @@
 		/>
 	</svg>
 	<span class="sr-only">Like this post</span>
-
-	{#if show}
-		<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-		{#each { length: 5 } as _, index (index)}
-			{@const top = random(0, 100) + '%'}
-			{@const left = random(0, 100) + '%'}
-			<span
-				class="particle absolute size-3 rounded-full bg-red-200"
-				style={`top: ${top}; left: ${left}; animation-duration: ${FADE_DURATION + 'ms'};`}
-			></span>
-		{/each}
-	{/if}
 </button>
 
 <style>
@@ -71,7 +79,14 @@
 		}
 	}
 
-	.particle {
+	button :global(.particle) {
+		--size: calc(var(--spacing) * 3);
+		position: absolute;
+		height: var(--size);
+		width: var(--size);
+		transform: translate(-50%, -50%);
+		border-radius: 50%;
+		background: var(--color-red-200);
 		animation: fadeOut forwards;
 	}
 </style>
