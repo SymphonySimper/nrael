@@ -70,10 +70,7 @@
 </button>
 
 <style>
-	@keyframes fadeOut {
-		from {
-			opacity: 1;
-		}
+	@keyframes fadeToTransparent {
 		to {
 			opacity: 0;
 		}
@@ -87,6 +84,6 @@
 		transform: translate(-50%, -50%);
 		border-radius: 50%;
 		background: var(--color-red-200);
-		animation: fadeOut forwards;
+		animation: fadeToTransparent forwards;
 	}
 </style>
