@@ -48,6 +48,6 @@
 		position: fixed;
 		display: flex;
 		animation: fadeIn 1000ms;
-		pointer-events: none;
+		user-select: none;
 	}
 </style>
