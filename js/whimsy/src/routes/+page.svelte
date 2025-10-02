@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 
-	const LINKS = [{ topic: 'particles', exercises: ['starry-night', 'shimmer-particle'] }] as const;
+	const LINKS = [
+		{ topic: 'particles', exercises: ['starry-night', 'shimmer-particle', 'falling-emoji'] }
+	] as const;
 </script>
 
 <div class="flex flex-col gap-2 divide-y divide-gray-200 p-2 md:w-[50vw]">
