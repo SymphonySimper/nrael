@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { random, range } from '$lib/utils';
+	import { convertPolarToCartesian, random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
-	const MAGNITUDE = 50;
 
 	let button: HTMLButtonElement;
 	let liked = $state(false);
@@ -21,12 +20,13 @@
 		range(5).forEach(() => {
 			const particle = document.createElement('span');
 
-			const x = random(-MAGNITUDE, MAGNITUDE) + 'px';
-			const y = random(-MAGNITUDE, MAGNITUDE) + 'px';
+			const angle = random(0, 360);
+			const distance = random(32, 64);
+			const [x, y] = convertPolarToCartesian(angle, distance);
 
 			particle.classList.add('particle');
-			particle.style.setProperty('--x', x);
-			particle.style.setProperty('--y', y);
+			particle.style.setProperty('--x', x + 'px');
+			particle.style.setProperty('--y', y + 'px');
 			particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
 
 			// eslint-disable-next-line svelte/no-dom-manipulating
@@ -97,6 +97,6 @@
 		background: var(--color-red-200);
 		animation:
 			fadeToTransparent var(--fade-duration) forwards,
-			disperse calc(var(--fade-duration) / 2) cubic-bezier(0.2, 0.56, 0, 1);
+			disperse calc(var(--fade-duration) / 2) forwards cubic-bezier(0.2, 0.56, 0, 1);
 	}
 </style>
