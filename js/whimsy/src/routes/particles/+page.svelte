@@ -4,7 +4,7 @@
 	import { random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
-	const MAGNITUDE = 48;
+	const MAGNITUDE = 50;
 
 	let button: HTMLButtonElement;
 	let liked = $state(false);
@@ -25,7 +25,8 @@
 			const y = random(-MAGNITUDE, MAGNITUDE) + 'px';
 
 			particle.classList.add('particle');
-			particle.style.transform = `translate(${x},${y})`;
+			particle.style.setProperty('--x', x);
+			particle.style.setProperty('--y', y);
 			particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
 
 			// eslint-disable-next-line svelte/no-dom-manipulating
@@ -79,9 +80,9 @@
 		}
 	}
 
-	@keyframes fromCenter {
-		from {
-			transform: translate(0px, 0px);
+	@keyframes disperse {
+		to {
+			transform: translate(var(--x), var(--y));
 		}
 	}
 
@@ -96,6 +97,6 @@
 		background: var(--color-red-200);
 		animation:
 			fadeToTransparent var(--fade-duration) forwards,
-			fromCenter calc(var(--fade-duration) / 2) cubic-bezier(0.2, 0.56, 0, 1);
+			disperse calc(var(--fade-duration) / 2) cubic-bezier(0.2, 0.56, 0, 1);
 	}
 </style>
