@@ -96,6 +96,6 @@
 		background: var(--color-red-200);
 		animation:
 			fadeToTransparent var(--fade-duration) forwards,
-			fromCenter calc(var(--fade-duration) / 2);
+			fromCenter calc(var(--fade-duration) / 2) cubic-bezier(0.2, 0.56, 0, 1);
 	}
 </style>
