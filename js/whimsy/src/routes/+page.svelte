@@ -4,7 +4,13 @@
 	const LINKS = [
 		{
 			topic: 'particles',
-			exercises: ['starry-night', 'shimmer-particle', 'falling-emoji', 'user-controllable-values']
+			exercises: [
+				'starry-night',
+				'shimmer-particle',
+				'falling-emoji',
+				'user-controllable-values',
+				'bouncing-balls'
+			]
 		}
 	] as const;
 </script>
@@ -22,16 +28,18 @@
 				{link.topic}</a
 			>
 			{#if link.exercises.length > 0}
-				<div class="flex items-center gap-1">
+				<div class="flex gap-1">
 					<div class="text-gray-500">Exercises:</div>
-					{#each link.exercises as exercise (exercise)}
-						{@const resolvedLink = resolve(`/${link.topic}/exercises/${exercise}`)}
-						<a
-							href={resolvedLink}
-							class="rounded-lg border border-gray-200 bg-gray-50 p-1 text-sm hover:underline"
-							>{exercise}</a
-						>
-					{/each}
+					<div class="flex flex-wrap items-center gap-1">
+						{#each link.exercises as exercise (exercise)}
+							{@const resolvedLink = resolve(`/${link.topic}/exercises/${exercise}`)}
+							<a
+								href={resolvedLink}
+								class="shrink-0 rounded-lg border border-gray-200 bg-gray-50 p-1 text-sm hover:underline"
+								>{exercise}</a
+							>
+						{/each}
+					</div>
 				</div>
 			{/if}
 		</div>
