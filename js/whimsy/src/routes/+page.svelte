@@ -2,7 +2,10 @@
 	import { resolve } from '$app/paths';
 
 	const LINKS = [
-		{ topic: 'particles', exercises: ['starry-night', 'shimmer-particle', 'falling-emoji'] }
+		{
+			topic: 'particles',
+			exercises: ['starry-night', 'shimmer-particle', 'falling-emoji', 'user-controllable-values']
+		}
 	] as const;
 </script>
 
