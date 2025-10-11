@@ -9,7 +9,8 @@
 				'shimmer-particle',
 				'falling-emoji',
 				'user-controllable-values',
-				'bouncing-balls'
+				'bouncing-balls',
+				'magic-wand'
 			]
 		}
 	] as const;
