@@ -11,7 +11,8 @@
 				'user-controllable-values',
 				'bouncing-balls',
 				'magic-wand',
-				'rocketship'
+				'rocketship',
+				'pixel-to-percentages'
 			]
 		}
 	] as const;
