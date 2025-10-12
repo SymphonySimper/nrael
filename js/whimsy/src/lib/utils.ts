@@ -35,14 +35,20 @@ export function sample<D>(values: Array<D>): D {
 }
 
 // Liner Interpolation
-export function lerp(props: {
+type LerpProps = {
 	value: number;
 	currentScaleMin: number;
 	currentScaleMax: number;
 	newScaleMin?: number;
 	newScaleMax?: number;
-}): number {
-	const { value, currentScaleMin, currentScaleMax, newScaleMin = 0, newScaleMax = 1 } = props;
+};
+
+function getLerpProps(props: LerpProps): Required<LerpProps> {
+	return { ...props, newScaleMin: props.newScaleMin ?? 0, newScaleMax: props.newScaleMax ?? 1 };
+}
+
+export function lerp(props: LerpProps): number {
+	const { value, currentScaleMin, currentScaleMax, newScaleMin, newScaleMax } = getLerpProps(props);
 	const standardNormalization = (value - currentScaleMin) / (currentScaleMax - currentScaleMin);
 
 	return (newScaleMax - newScaleMin) * standardNormalization + newScaleMin;
@@ -54,4 +60,19 @@ export function clamp(value: number, min: number = 0, max: number = 1): number {
 	}
 
 	return Math.max(min, Math.min(max, value));
+}
+
+export function clampedLerp(props: LerpProps) {
+	const { value, currentScaleMin, currentScaleMax, newScaleMin, newScaleMax } = getLerpProps(props);
+	return clamp(
+		lerp({
+			value,
+			currentScaleMin,
+			currentScaleMax,
+			newScaleMin,
+			newScaleMax
+		}),
+		newScaleMin,
+		newScaleMax
+	);
 }
