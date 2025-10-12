@@ -10,7 +10,8 @@
 				'falling-emoji',
 				'user-controllable-values',
 				'bouncing-balls',
-				'magic-wand'
+				'magic-wand',
+				'rocketship'
 			]
 		}
 	] as const;

@@ -29,3 +29,7 @@ export function convertPolarToCartesian(angle: number, distance: number): [numbe
 
 	return [x, y];
 }
+
+export function sample<D>(values: Array<D>): D {
+	return values[Math.round(random(0, values.length - 1))];
+}
