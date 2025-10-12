@@ -13,7 +13,8 @@
 				'magic-wand',
 				'rocketship',
 				'pixel-to-percentages',
-				'shifting-background'
+				'shifting-background',
+				'scaling-a-slider'
 			]
 		}
 	] as const;
