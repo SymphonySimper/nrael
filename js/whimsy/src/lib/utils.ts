@@ -33,3 +33,17 @@ export function convertPolarToCartesian(angle: number, distance: number): [numbe
 export function sample<D>(values: Array<D>): D {
 	return values[Math.round(random(0, values.length - 1))];
 }
+
+// Liner Interpolation
+export function lerp(props: {
+	value: number;
+	currentScaleMin: number;
+	currentScaleMax: number;
+	newScaleMin?: number;
+	newScaleMax?: number;
+}): number {
+	const { value, currentScaleMin, currentScaleMax, newScaleMin = 0, newScaleMax = 1 } = props;
+	const standardNormalization = (value - currentScaleMin) / (currentScaleMax - currentScaleMin);
+
+	return (newScaleMax - newScaleMin) * standardNormalization + newScaleMin;
+}

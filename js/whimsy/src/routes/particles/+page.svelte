@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { convertPolarToCartesian, random, range } from '$lib/utils';
+	import { convertPolarToCartesian, lerp, random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
 	const NUM_OF_PARTICLES = 5;
@@ -22,7 +22,14 @@
 		range(NUM_OF_PARTICLES).forEach((index) => {
 			const particle = document.createElement('span');
 
-			const angle = (360 / NUM_OF_PARTICLES) * index + random(-JITTER, JITTER);
+			const angle =
+				lerp({
+					value: index,
+					currentScaleMin: 0,
+					currentScaleMax: NUM_OF_PARTICLES,
+					newScaleMin: 0,
+					newScaleMax: 360
+				}) + random(-JITTER, JITTER);
 			const distance = random(32, 64);
 			const [x, y] = convertPolarToCartesian(angle, distance);
 
