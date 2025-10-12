@@ -40,21 +40,27 @@
 		const bgLightness = value <= 75 ? 6 : getLerp(value, 6, 26);
 
 		// Alternate method using clamp
-		// const scaleY = clamp(
-		// 	lerp({ value, currentScaleMin: 0, currentScaleMax: 50, newScaleMin: 0.01, newScaleMax: 1 }),
-		// 	0.01,
-		// 	1
-		// );
-		// const boxHue = clamp(
-		// 	lerp({ value, currentScaleMin: 50, currentScaleMax: 100, newScaleMin: 0, newScaleMax: 45 }),
-		// 	0,
-		// 	45
-		// );
-		// const bgLightness = clamp(
-		// 	lerp({ value, currentScaleMin: 75, currentScaleMax: 100, newScaleMin: 6, newScaleMax: 26 }),
-		// 	6,
-		// 	26
-		// );
+		// const scaleY = clampedLerp({
+		// 	value,
+		// 	currentScaleMin: 0,
+		// 	currentScaleMax: 50,
+		// 	newScaleMin: 0.01,
+		// 	newScaleMax: 1
+		// });
+		// const boxHue = clampedLerp({
+		// 	value,
+		// 	currentScaleMin: 50,
+		// 	currentScaleMax: 100,
+		// 	newScaleMin: 0,
+		// 	newScaleMax: 45
+		// });
+		// const bgLightness = clampedLerp({
+		// 	value,
+		// 	currentScaleMin: 75,
+		// 	currentScaleMax: 100,
+		// 	newScaleMin: 6,
+		// 	newScaleMax: 26
+		// });
 
 		// No changes necessary below this point.
 		box.style.transform = `
