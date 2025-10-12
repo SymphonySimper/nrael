@@ -4,6 +4,8 @@
 	import { convertPolarToCartesian, random, range } from '$lib/utils';
 
 	const FADE_DURATION = 1000;
+	const NUM_OF_PARTICLES = 5;
+	const JITTER = 40;
 
 	let button: HTMLButtonElement;
 	let liked = $state(false);
@@ -17,10 +19,10 @@
 
 		const particles: HTMLSpanElement[] = [];
 
-		range(5).forEach(() => {
+		range(NUM_OF_PARTICLES).forEach((index) => {
 			const particle = document.createElement('span');
 
-			const angle = random(0, 360);
+			const angle = (360 / NUM_OF_PARTICLES) * index + random(-JITTER, JITTER);
 			const distance = random(32, 64);
 			const [x, y] = convertPolarToCartesian(angle, distance);
 
