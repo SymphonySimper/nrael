@@ -12,7 +12,8 @@
 				'bouncing-balls',
 				'magic-wand',
 				'rocketship',
-				'pixel-to-percentages'
+				'pixel-to-percentages',
+				'shifting-background'
 			]
 		}
 	] as const;
