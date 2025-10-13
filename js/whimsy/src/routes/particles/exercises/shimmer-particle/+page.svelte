@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	const SHIMMER_DURATION = 1000;
+
+	// const allowMotion = window.matchMedia('(prefers-reduced-motion: no-preference)').matches; vanilla version
+	const allowMotion = new MediaQuery('prefers-reduced-motion: no-preference', true); // svelte version
 
 	const timeouts: ReturnType<typeof setTimeout>[] = [];
 	let button: HTMLButtonElement;
 
 	function handleShowShimmer() {
+		if (!allowMotion.current) return;
 		if (!button) return;
 
 		const shimmer = document.createElement('span');
