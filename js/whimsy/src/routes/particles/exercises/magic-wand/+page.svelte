@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { MediaQuery } from 'svelte/reactivity';
+
 	import { convertPolarToCartesian, random, range } from '$lib/utils';
 
 	import sparkle from '$lib/assets/particles/exercises/magic-wand/sparkle.svg';
@@ -8,6 +10,7 @@
 	const WAND_ANGLE = 225;
 
 	let div: HTMLDivElement;
+	const enableMotion = new MediaQuery('prefers-reduced-motion: no-preference', false);
 	const timers: ReturnType<typeof setTimeout>[] = [];
 
 	function handleClick(e: MouseEvent) {
@@ -15,12 +18,11 @@
 		const y = e.clientY;
 
 		const particles: HTMLImageElement[] = [];
-		range(5).forEach(() => {
+		range(enableMotion.current ? 5 : 3).forEach(() => {
 			const particle = document.createElement('img');
-			const [polarX, polarY] = convertPolarToCartesian(
-				random(WAND_ANGLE - 20, WAND_ANGLE + 20),
-				random(30, 90)
-			);
+			const [polarX, polarY] = enableMotion.current
+				? convertPolarToCartesian(random(WAND_ANGLE - 20, WAND_ANGLE + 20), random(30, 90))
+				: convertPolarToCartesian(random(WAND_ANGLE - 60, WAND_ANGLE + 60), random(6, 30));
 
 			particle.classList.add('star');
 			particle.setAttribute('src', sparkle);
@@ -31,7 +33,7 @@
 
 			particle.style.setProperty('--x', polarX + 'px');
 			particle.style.setProperty('--y', polarY + 'px');
-			particle.style.setProperty('--duration', DURATION + 'ms');
+			particle.style.setProperty('--duration', (enableMotion.current ? DURATION : 0) + 'ms');
 			particle.style.setProperty('--fade-duration', DURATION + 'ms');
 			particle.style.setProperty('--fade-delay', FADE_DELAY + 'ms');
 			particle.style.setProperty('--rotation', random(90, 360) + 'deg');
@@ -92,7 +94,7 @@
 			position: absolute;
 			animation:
 				disperse var(--duration) forwards cubic-bezier(0.26, 0.95, 0, 1),
-				fadeToTransparent var(--duration) var(--fade-delay) forwards;
+				fadeToTransparent var(--fade-duration) var(--fade-delay) forwards;
 		}
 	}
 </style>
